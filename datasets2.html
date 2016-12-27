@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.26.0/mapbox-gl.js'></script>
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.26.0/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .mapboxgl-popup {
+            max-width: 400px;
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id='map'></div>
+
+    <script>
+
+      //var map = L.map('map').setView([21.306944, -157.858333], 14);
+
+      L.tileLayer('https://api.mapbox.com/styles/v1/solomon71/ciu0cz2e700272ho89adlrhgc/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic29sb21vbjcxIiwiYSI6ImNpa3FhdDNicjAwOTN2MGt0MnZhaWJ1bmIifQ.wnjAO4qI6YfKLw9hvRHKIA').addTo(map);
+
+
+        var polygon = L.polygon([
+          [21.3104, -157.8684],
+          [21.3099, -157.8684],
+          [21.3094, -157.8684]],{
+          color: '#ffffff'
+        }).addTo(map);
+
+
+        map.on('load', function() {
+
+
+            map.on('click', function(e) {
+                var features = map.queryRenderedFeatures(e.point, {
+                    layers: ['ships']
+                });
+
+                // var latlng = L.latlng(feature.geometry.coordinates);
+                // var map = L.map('map').setView(latlng, 14);
+                // var polygon = L.polygon([
+                //   [21.3088, -157.8657],
+                //   [21.3099, -157.8684],
+                //   [21.3094, -157.8686]],{
+                //     color: '#ffffff'
+                //   }).addTo(map);
+
+                var pointsXY = e.point;
+                if(pointsXY){
+                  console.log(pointsXY);
+                }
+                //console.log(pointsXY);
+
+                if (!features.length) {
+                    return;
+                }
+                var feature = features[0];
+
+                var pText = '';
+                if (feature.properties.name) {
+                    pText = '<p>' + feature.properties.name + '</p>';
+                    // console.log(feature.properties.name );
+                    // console.log(feature.geometry.coordinates);
+                    // console.log(feature.properties.course);
+                    // console.log(feature.properties.speed);
+
+
+                } else {
+                    pText = '<p>' + feature.properties.mmsi + '</p>';
+                    // console.log(feature.properties.mmsi);
+                    // console.log(feature.geometry.coordinates);
+                    // console.log(feature.properties.course);
+                    // console.log(feature.properties.speed);
+
+                }
+
+                pText += '<p>Speed: ' + feature.properties.speed + '</p>'
+
+                pText += '<br><a target="_blank" href="http://www.marinetraffic.com/en/ais/details/ships/mmsi:' + feature.properties.mmsi + '">Info</a>';
+
+                var popup = new mapboxgl.Popup()
+                    .setLngLat(feature.geometry.coordinates)
+                    .setHTML(pText)
+                    .addTo(map);
+
+
+            });
+
+            map.on('mousemove', function(e) {
+                var features = map.queryRenderedFeatures(e.point, {
+                    layers: ['ships']
+                });
+                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

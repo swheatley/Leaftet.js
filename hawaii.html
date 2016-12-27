@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+  <!-- Leaflet draw scripts -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@0.4.1/dist/leaflet.draw.css" />
+  <script src="https://unpkg.com/leaflet-draw@0.4.1/dist/leaflet.draw.js"></script>
+  <style>
+    #map{
+      height: 100vh;
+
+    }
+    strong{
+      width: 5px;
+      height: 5px;
+    }
+    .zipdrive{
+
+    }
+
+</style>
+</head>
+<body>
+  <div id="map"></div>
+
+
+
+<script>
+
+  var latlng = L.latLng(21.306944, -157.858333);
+  var map = L.map('map').setView(latlng, 14);
+
+  //var map = L.geoJSON(geojsonFeature).addTo(map);
+
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'shansen30.1ndamiad',
+    accessToken: 'pk.eyJ1Ijoic2hhbnNlbjMwIiwiYSI6ImNpdWszZXlidDAxN28yb21uenltdzVranYifQ.r_j1WlBMKTQVzQMwCGx3AA',
+}).addTo(map);
+
+
+var polygon = L.polygon([
+  [21.3102, -157.8682],
+  [21.3100, -157.8684],
+  [21.3101, -157.8684],
+  [21.3101, -157.8684]],{
+  color: '#ffffff'
+}).addTo(map);
+
+// var latlngs = [[21.3100, -157.8682],[21.3102, -157.8684],  [21.3104, -157.8686]];
+// var polygohn = L.polygon(latlngs, {color: 'red'}).addTo(map);
+// map.fitBounds(polygon.getBounds())
+
+var image = L.icon({
+     iconUrl: 'thumbdrive-7.png',
+     iconSize:     [40, 40], // size of the icon
+     iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+     className: 'zipdrive',
+     zoomControl: true
+     //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAn chor
+    });
+
+
+marker = L.marker([20.384538097179487,-157.379150390625],{icon:image}).addTo(map);
+
+polygon.bindPopup("<strong>Manuokeai</strong>");
+
+var imageUrl = 'thumbdrive-7.png',
+    imageBounds = [[20.384538097179487, -157.379150390625], [20.384538097179487, -157.379150390625]];
+L.imageOverlay(imageUrl, imageBounds).addTo(map);
+//var marker = L.marker([21.3099, -157.8684]).addTo(mymap);
+// var marker2 = L.marker([40.602395, -111.949890]).addTo(mymap);
+// var marker3 = L.marker([40.671118,-111.879788]).addTo(mymap);
+// var marker4 = L.marker([40.763691,-111.886670], {icon:thumbDrive}).addTo(mymap);
+
+
+// marker2.bindPopup("<strong>Wheatley's House</strong>");
+// marker3.bindPopup("<strong>Hansen's House<strong>");
+// marker4.bindPopup("<strong>Work</strong><br>Welikesmall</br>");
+
+
+
+
+// polygon.bindPopup("<strong>Manuokeai</strong>");
+// var circle = L.circle([51.508, -0.11],{
+//   color: 'red',
+//   fillColor: '#ff03',
+//   fillOpacity: 0.5,
+//   radius: 500
+// }).addTo(mymap);
+
+ // var polygon = L.polygon([
+ //   [51.509, -0.08],
+ //   [51.503, -0.06],
+ //   [51.51, -0.047]
+ // ]).addTo(mymap);
+
+//rectangle geographical bounds
+//var bounds = [[54.559322, -5.767822], [56.1210604, -3.024140]];
+// var rectangle = L.rectangle([
+//   [51.5129, -0.09218],
+//   [51.503, -0.10],
+//   [51.51, -0.080]
+//   ]).addTo(mymap);
+// L.rectangle(bounds, {color: '#ff7800', weight: 1}).addTo(mymap);
+// mymap.fitBounds(bounds);
+
+
+
+
+// circle.bindPopup("I am a circle.");
+// polygon.bindPopup("I am a polygon.");
+// rectangle.bindPopup("yo yo");
+//
+// var popup = L.popup();
+//
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent("You clicked the map at " + e.latlng.toString())
+//         .openOn(mymap);
+// }
+//
+// mymap.on('click', onMapClick);
+</script>
+</body>
+</html>

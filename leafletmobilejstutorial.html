@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Added files from tutorial -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+  <style>
+    body{
+      padding: 0;
+      margin: 0;
+
+    }
+    html,body, #map{
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    var map = L.map('map').fitWorld();
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/MapID/997/256/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    //id:'shansen30.1ndapji6',
+    accessToken: 'pk.eyJ1Ijoic2hhbnNlbjMwIiwiYSI6ImNpdWszZXlidDAxN28yb21uenltdzVranYifQ.r_j1WlBMKTQVzQMwCGx3AA'
+    }).addTo(map);
+
+    map.locate({setView: true, maxZoom: 16});
+
+    function onLocationFound(e){
+      var radius = e.accuracy / 2;
+
+      L.marker(e.mymap).addTo(map)
+        .bindPopup("You are witmymapn " + radius + " meters from tmymaps point").openPopup();
+
+      L.circle(e.mymap, radius).addTo(map);
+    }
+
+    map.on('locationfound', onLocationFound);
+
+    function onLocationError(e){
+      alert(e.message);
+
+    }
+    map.on('locationerror', onLocationError);
+  </script>
+</body>
+</html>
